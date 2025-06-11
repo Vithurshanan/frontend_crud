@@ -5,6 +5,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import DeleteConfirmation from '../components/DeleteConfirmation'
 
+const API_URL = 'https://backend-curd-hazel.vercel.app/api'
+
 const User = () => {
   const navigate = useNavigate()
   const [users, setUsers] = useState([])
@@ -18,7 +20,7 @@ const User = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/api/users")
+      const response = await axios.get(`${API_URL}/users`)
       setUsers(response.data)
       setLoading(false)
     } catch (error) {
@@ -43,7 +45,7 @@ const User = () => {
 
   const handleDeleteConfirm = async () => {
     try {
-      const response = await axios.delete(`http://localhost:4000/api/delete/user/${deleteModal.userId}`)
+      const response = await axios.delete(`${API_URL}/delete/user/${deleteModal.userId}`)
       if (response.status === 200) {
         toast.success(`User "${deleteModal.userName}" deleted successfully`)
         fetchUsers() // Refresh the list
